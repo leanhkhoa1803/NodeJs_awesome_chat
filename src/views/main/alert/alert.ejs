@@ -1,0 +1,8 @@
+<% if(success !="" ) { %>
+    <% success.forEach((item)=>{ %>
+        <script>openLoginModal();</script>
+        <div class="master-success-message alert alert-success">
+            <%- item %>
+        </div>
+        <% }); %>
+            <% } %>
