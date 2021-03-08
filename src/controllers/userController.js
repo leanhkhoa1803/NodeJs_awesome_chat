@@ -70,7 +70,6 @@ const updateInfo = async (req, res) => {
     errors.forEach((item) => {
       errorArray.push(item.msg);
     });
-    console.log(errorArray);
     return res.status(500).send(errorArray);
   }
 

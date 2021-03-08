@@ -22,6 +22,7 @@ const initPassportLocal = () => {
       async (req, email, password, done) => {
         try {
           const user = await UserModel.findByEmail(email);
+
           //kiem tra email co ton tai hay k
           if (!user) {
             return done(
@@ -44,7 +45,7 @@ const initPassportLocal = () => {
             return done(
               null,
               false,
-              req.flash("errors", transValidation.login_failed)
+              req.flash("errors", transErrors.login_failed)
             );
           }
           //neu dung email va password thi login success

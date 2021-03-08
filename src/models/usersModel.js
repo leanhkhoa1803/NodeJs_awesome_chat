@@ -69,6 +69,28 @@ UserSchema.statics = {
       { "local.password": item }
     ).exec();
   },
+
+  //deprecatedUserId : mang chua userId va contactId dung de loc cac Id khong ton tai tron mang de select
+  findAllUserForAddContact(deprecatedUserId, keyword) {
+    //tim tat ca user khong phai la ban be va thoa dieu kien tai khoan isActive va username or email is like
+    return this.find(
+      {
+        $and: [
+          { _id: { $nin: deprecatedUserId } },
+          { "local.isActive": true },
+          {
+            $or: [
+              { username: { $regex: new RegExp(keyword, "i") } },
+              { "local.email": new RegExp(keyword, "i") },
+              { "facebook.email": new RegExp(keyword, "i") },
+              { "google.email": new RegExp(keyword, "i") },
+            ],
+          },
+        ],
+      },
+      { _id: 1, username: 1, address: 1, avatar: 1 }
+    ).exec();
+  },
 };
 
 UserSchema.methods = {
