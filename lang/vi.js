@@ -11,6 +11,8 @@ exports.transValidation = {
   update_gender: "Đừng có inspect :))",
   update_address: "Địa chỉ giới hạn từ 3 đến 30 kí tự",
   update_phone: "Số điện thoại bắt đầu từ số 0 ,giới hạn từ 10-11 kí tự",
+  find_user_keyword:
+    "Lỗi từ khóa tìm kiếm, Vui lòng không nhập từ khóa đặc biệt",
 };
 
 exports.transSuccess = {

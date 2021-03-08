@@ -2,8 +2,10 @@ const express = require("express");
 const authController = require("./../controllers/authController");
 const homeController = require("./../controllers/homeController");
 const userController = require("./../controllers/userController");
+const contactController = require("./../controllers/contactController");
 const authValidation = require("./../validation/authValidation");
 const userValidation = require("./../validation/userValidation");
+const contactValidation = require("./../validation/contactValidation");
 const passport = require("passport");
 const initPassportLocal = require("../controllers/passportController/local");
 const initPassportFacebook = require("../controllers/passportController/facebook");
@@ -90,6 +92,22 @@ const initRoutes = (app) => {
     authController.checkLogin,
     userValidation.updatePassword,
     userController.updatePassword
+  );
+  router.get(
+    "/contact/find-users/:keyword",
+    authController.checkLogin,
+    contactValidation.findUserContact,
+    contactController.findUsersContact
+  );
+  router.post(
+    "/contact/add-new",
+    authController.checkLogin,
+    contactController.addNew
+  );
+  router.delete(
+    "/contact/remove-request-contact",
+    authController.checkLogin,
+    contactController.removeRequestContact
   );
 
   return app.use("/", router);
