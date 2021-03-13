@@ -196,10 +196,10 @@ label:focus,
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
-.contactPanel .user-remove-request-contact,
-.contactPanel .user-acccept-contact-received,
+.contactPanel .user-remove-request-contact-sent,
+.contactPanel .user-accept-request-contact-received,
 .contactPanel .user-remove-request-sent,
-.contactPanel .user-reject-request-contact-received {
+.contactPanel .user-remove-request-contact-received {
   box-sizing: border-box;
   display: inline-flex;
   flex-shrink: 0;
@@ -228,7 +228,7 @@ label:focus,
   margin: 10px 0px 5px 2px;
 }
 
-.contactPanel .user-remove-request-contact {
+.contactPanel .user-remove-request-contact-sent {
   display: none;
 }
 
@@ -245,7 +245,7 @@ label:focus,
 
 #notifications {
   display: none;
-  min-width: 250px;
+  min-width: 300px;
   position: absolute;
   right: 17px !important;
   border: solid 1px rgba(100, 100, 100, 0.2);
@@ -254,7 +254,7 @@ label:focus,
   z-index: 999;
 }
 
-#notifications h3 {
+#popup-mark-notif-isRead {
   display: block;
   color: #333;
   background: #fff;
@@ -263,6 +263,9 @@ label:focus,
   padding: 8px;
   margin: 0;
   border-bottom: solid 1px rgba(100, 100, 100, 0.3);
+}
+#popup-mark-notif-isRead:hover {
+  cursor: pointer;
 }
 
 #notifications:before {
@@ -293,7 +296,7 @@ label:focus,
 }
 
 .noti_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #e1141e;
   color: #fff;
@@ -308,17 +311,20 @@ label:focus,
 }
 
 .noti_content {
-  height: 200px;
+  height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content > span {
-  position: absolute;
+.noti_content > div {
   max-width: 95%;
-  margin-top: 5px;
-  margin-left: 7px;
+  margin: 5px 0px 0px 7px;
   color: #333;
+  padding: 5px;
+}
+.noti_content > div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
 }
 
 .seeAll {
@@ -668,7 +674,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -1274,4 +1280,87 @@ label:focus,
 .update-user-model-alert-error,
 .update-user-model-alert-success {
   display: none;
+}
+
+.unread-notifications {
+  background-color: #e3e8f0;
+}
+
+.display-notifications {
+  display: none;
+}
+#noti_Button:hover {
+  text-decoration: none;
+}
+.list-notifications li {
+  width: 90%;
+  height: auto;
+  padding: 7px 0px 0 0;
+  margin: 0 auto;
+  list-style-type: none;
+}
+
+.list-notifications li div {
+  border: 1px solid #dfe6e9;
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.list-notifications li div:hover {
+  cursor: pointer;
+  background-color: #eceff1;
+}
+
+.mark-notify-as-read {
+  float: right;
+  margin-right: 20px;
+}
+.read-more-notify,
+.read-more-contacts,
+.read-more-contacts-sent,
+.read-more-contacts-received,
+.read-more-all-chat,
+.read-more-user-chat,
+.read-more-group-chat {
+  text-align: center;
+}
+
+.lds-hourglass {
+  display: none;
+  position: relative;
+  width: 27px;
+  height: 27px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 15px solid #34495e;
+  border-color: #34495e transparent #34495e transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+.display-important {
+  display: inline-block !important;
+}
+
+.tab-content > .active {
+  background-color: #ffffff;
 }
