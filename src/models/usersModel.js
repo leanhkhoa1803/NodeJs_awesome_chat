@@ -91,6 +91,13 @@ UserSchema.statics = {
       { _id: 1, username: 1, address: 1, avatar: 1 }
     ).exec();
   },
+
+  getDataByUserId(id) {
+    return this.findOne(
+      { _id: id },
+      { _id: 1, username: 1, address: 1, avatar: 1 }
+    ).exec();
+  },
 };
 
 UserSchema.methods = {

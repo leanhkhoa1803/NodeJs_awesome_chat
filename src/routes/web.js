@@ -3,6 +3,7 @@ const authController = require("./../controllers/authController");
 const homeController = require("./../controllers/homeController");
 const userController = require("./../controllers/userController");
 const contactController = require("./../controllers/contactController");
+const notifycationController = require("./../controllers/notifycationController");
 const authValidation = require("./../validation/authValidation");
 const userValidation = require("./../validation/userValidation");
 const contactValidation = require("./../validation/contactValidation");
@@ -105,9 +106,49 @@ const initRoutes = (app) => {
     contactController.addNew
   );
   router.delete(
-    "/contact/remove-request-contact",
+    "/contact/remove-contact",
     authController.checkLogin,
-    contactController.removeRequestContact
+    contactController.removeContact
+  );
+  router.delete(
+    "/contact/remove-request-contact-sent",
+    authController.checkLogin,
+    contactController.removeRequestContactSent
+  );
+  router.delete(
+    "/contact/remove-request-contact-received",
+    authController.checkLogin,
+    contactController.removeRequestContactReceived
+  );
+  router.put(
+    "/contact/accept-request-contact-received",
+    authController.checkLogin,
+    contactController.acceptRequestContactReceived
+  );
+  router.get(
+    "/contact/read-more-contacts",
+    authController.checkLogin,
+    contactController.readMoreContacts
+  );
+  router.get(
+    "/contact/read-more-contacts-sent",
+    authController.checkLogin,
+    contactController.readMoreContactsSent
+  );
+  router.get(
+    "/contact/read-more-contacts-received",
+    authController.checkLogin,
+    contactController.readMoreContactsReceived
+  );
+  router.get(
+    "/notifycation/read-more",
+    authController.checkLogin,
+    notifycationController.readMore
+  );
+  router.put(
+    "/notification/mark-all-as-read",
+    authController.checkLogin,
+    notifycationController.markNotifyAsRead
   );
 
   return app.use("/", router);

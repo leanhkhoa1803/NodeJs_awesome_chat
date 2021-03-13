@@ -38,16 +38,28 @@
                 <script src="bower_components/photoset-grid/jquery.photoset-grid.min.js"></script>
                 <script src="bower_components/jquery-colorbox/jquery.colorbox-min.js"></script>
                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
+                <script src="socket.io/socket.io.js"></script>
                 <!-- My js-->
                 <script src="js/mainConfig.js"></script>
                 <script src="js/updateUser.js"></script>
 
                 <script src="js/caculateNotifyContact.js"></script>
+                <script src="js/caculateNotifyCation.js"></script>
 
                 <script src="js/addContact.js"></script>
-                <script src="js/removeRequestContact.js"></script>
+                <script src="js/removeContact.js"></script>
+
+                <script src="js/removeRequestContactSent.js"></script>
+                <script src="js/removeRequestContactReceived.js"></script>
+
+                <script src="js/acceptRequestContactReceived.js"></script>
+
                 <script src="js/findUserContact.js"></script>
+                <script src="js/readMoreContacts.js"></script>
+                <script src="js/readMoreContactsSent.js"></script>
+                <script src="js/readMoreContactsReceived.js"></script>
+                <script src="js/readMoreNotify.js"></script>
+                <script src="js/markNotifyAsRead.js"></script>
 
                 <%- include('contact/contactModal'); %>
                     <%- include('streaming/streamingModal'); %>
@@ -55,6 +67,7 @@
                             <%- include('attach/attachModal'); %>
                                 <%- include('user/userModal'); %>
                                     <%- include('groupChat/groupChatModal'); %>
+                                        <%- include('notifycation/notifycationModal'); %>
 
 </body>
 
