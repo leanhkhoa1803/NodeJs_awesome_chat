@@ -50,4 +50,8 @@ exports.transErrors = {
   account_undefined: "Tài khoản này không tồn tại",
   user_current_password: "Mật khẩu hiện tại không chính xác",
   conversation_is_not_found: "Cuộc trò chuyện không tồn tại",
+  image_message_type:
+    "Kiểu file không hợp lệ vui lòng chọn file png ,jpg hoặc jpeg",
+  image_message_size: "Ảnh tối đa upload là 1MB , Vui lòng thử lại",
+  attachment_message_size: "File tối đa upload là 1MB , Vui lòng thử lại",
 };

@@ -98,6 +98,8 @@ function gridPhotos(layoutNumber) {
       let href = $(this).attr("href");
       let modalImagesId = href.replace("#", "");
 
+      let dataModalImage = $(`#${modalImagesId}`).find("div.modal-body").html();
+
       let countRows = Math.ceil(
         $(`#${modalImagesId}`).find("div.all-images>img").length / layoutNumber
       );
@@ -121,6 +123,11 @@ function gridPhotos(layoutNumber) {
             });
           },
         });
+
+      //bat su kien dong modal
+      $(`#${modalImagesId}`).on("hidden.bs.modal", function () {
+        $(this).find("div.modal-body").html(dataModalImage);
+      });
     });
 }
 
@@ -190,7 +197,20 @@ function changScreenChat() {
       nineScrollRight(divId);
       // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
       enableEmojioneArea(divId);
+
+      //bat dom cho nt image
+      imageChat(divId);
+      //bat dom cho nt file
+      attachmentChat(divId);
     });
+}
+function bufferToBase64(buffer) {
+  return btoa(
+    new Uint8Array(buffer).reduce(
+      (data, byte) => data + String.fromCharCode(byte),
+      ""
+    )
+  );
 }
 $(document).ready(function () {
   // Hide số thông báo trên đầu icon mở modal contact

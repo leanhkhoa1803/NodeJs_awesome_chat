@@ -159,6 +159,16 @@ const initRoutes = (app) => {
     messageValidation.checkMessageLength,
     messageController.addNewTextEmoji
   );
+  router.post(
+    "/message/add-new-image",
+    authController.checkLogin,
+    messageController.addNewImage
+  );
+  router.post(
+    "/message/add-new-attachment",
+    authController.checkLogin,
+    messageController.addNewAttachment
+  );
   return app.use("/", router);
 };
 module.exports = initRoutes;
