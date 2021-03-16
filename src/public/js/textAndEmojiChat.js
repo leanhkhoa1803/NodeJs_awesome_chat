@@ -6,8 +6,11 @@ function textAndEmojiChat(divId) {
       if (element.which === 13) {
         let targetId = $(`#write-chat-${divId}`).data("chat");
         let messageValue = $(`#write-chat-${divId}`).val();
-
+        messageValue = messageValue.trim();
         if (!targetId.length || !messageValue.length) {
+          $(`#write-chat-${divId}`).val("");
+          currentEmojiChat.find(".emojionearea-editor").text("");
+          typing_Off(divId);
           return false;
         }
 
@@ -80,8 +83,19 @@ function textAndEmojiChat(divId) {
             $(`.person[data-chat = ${divId}]`).trigger(
               "message.moveConversationToTop"
             );
-            //emit realtime
+
+            //b6 :emit realtime
             socket.emit("chat-text-emoji", dataToEmit);
+
+            //b7 :emit remove typing real time
+            typing_Off(divId);
+            //b8 : remove typing if chat group
+            let check = $(`.chat[data-chat = ${divId}]`).find(
+              "div.bubble-typing-gif"
+            );
+            if (check.length) {
+              return false;
+            }
           }
         ).fail(function (response) {
           alertify.notify(response.responseText, "error", 5);

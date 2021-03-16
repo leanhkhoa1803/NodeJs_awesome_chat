@@ -36,10 +36,16 @@ function enableEmojioneArea(divId) {
     shortnames: false,
     events: {
       keyup: function (editor, event) {
+        typing_On(divId);
         $(`#write-chat-${divId}`).val(this.getText());
       },
       click: function () {
         textAndEmojiChat(divId);
+        //bat chuc nang lang nghe nguoi dung nhap du lieu
+      },
+
+      blur: function () {
+        typing_Off(divId);
       },
     },
   });
