@@ -6,6 +6,8 @@ const removeContact = require("./contact/removeContact");
 const chatTextEmoji = require("./chat/chatTextEmoji");
 const typing_On = require("./chat/typing_On");
 const typing_Off = require("./chat/typing_Off");
+const chatImage = require("./chat/chatImage");
+const chatAttachment = require("./chat/chatAttachment");
 
 let initSockets = (io) => {
   addNewContact(io);
@@ -16,6 +18,7 @@ let initSockets = (io) => {
   chatTextEmoji(io);
   typing_On(io);
   typing_Off(io);
+  chatAttachment(io);
 };
 
 module.exports = initSockets;

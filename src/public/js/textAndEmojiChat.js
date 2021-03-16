@@ -32,7 +32,7 @@ function textAndEmojiChat(divId) {
             };
             //b1 : chinh sua du lieu
             let messageOfMe = $(`
-            <div class="bubble me data-mess-id="${data.message._id}"></div>`);
+            <div class="bubble me" data-mess-id="${data.message._id}"></div>`);
             if (dataTextEmojiForSend.isChatGroup) {
               messageOfMe.html(`<img src="/images/users/${data.message.sender.avatar}" class="avatar-small"
               title="${data.message.sender.username}">`);
@@ -109,7 +109,7 @@ $(document).ready(function () {
     let divId = "";
     //b1 : chinh sua du lieu
     let messageOfYou = $(
-      `<div class="bubble you data-mess-id="${response.message._id}">
+      `<div class="bubble you" data-mess-id="${response.message._id}">
       <img src="/images/users/${response.message.sender.avatar}" class="avatar-small"
         title="${response.message.sender.username}">
         ${response.message.text}
