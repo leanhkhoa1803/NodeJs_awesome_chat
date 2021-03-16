@@ -1,6 +1,7 @@
 const passport = require("passport");
 const passportLocal = require("passport-local");
 const UserModel = require("../../models/usersModel");
+const chat_groupModel = require("../../models/chat_groupModel");
 
 const {
   transErrors,
@@ -73,14 +74,18 @@ const initPassportLocal = () => {
 
   //call password.session();
   //return userInfo to req.user
-  passport.deserializeUser((id, done) => {
-    UserModel.findByUserId(id)
-      .then((user) => {
-        return done(null, user);
-      })
-      .catch((err) => {
-        return done(err, null);
-      });
+  passport.deserializeUser(async (id, done) => {
+    try {
+      let user = await UserModel.findByUserIdToSession(id);
+      let getChatGroupsId = await chat_groupModel.getChatGroupIdByUser(
+        user._id
+      );
+      user = user.toObject();
+      user.chatGroupId = getChatGroupsId;
+      return done(null, user);
+    } catch (error) {
+      return done(err, null);
+    }
   });
 };
 

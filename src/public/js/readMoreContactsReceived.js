@@ -42,9 +42,8 @@ $(document).ready(function () {
                     </div>
                 </div>
             </li>`;
-            $("#request-contact-received").find("ul").append(newUser);
           });
-
+          $("#request-contact-received").find("ul").append(newUser);
           $("#link-read-more-contacts-received").css("display", "inline-block");
           $(".lds-hourglass").css("display", "none");
 

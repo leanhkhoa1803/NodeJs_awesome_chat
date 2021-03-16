@@ -1,7 +1,6 @@
 $(document).ready(function () {
   $("#link-read-more-contacts-sent").bind("click", function () {
     let skipNumber = $("#request-contact-sent").find("li").length;
-
     $("#link-read-more-contacts-sent").css("display", "none");
     $(".lds-hourglass").css("display", "inline-block");
 

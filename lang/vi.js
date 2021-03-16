@@ -13,6 +13,7 @@ exports.transValidation = {
   update_phone: "Số điện thoại bắt đầu từ số 0 ,giới hạn từ 10-11 kí tự",
   find_user_keyword:
     "Lỗi từ khóa tìm kiếm, Vui lòng không nhập từ khóa đặc biệt",
+  message_Text_Emoji_Incorrect: "Tin nhắn tối đa 400 kí tự",
 };
 
 exports.transSuccess = {
@@ -48,4 +49,5 @@ exports.transErrors = {
   avatar_size: "Ảnh tối đa upload là 1MB , Vui lòng thử lại",
   account_undefined: "Tài khoản này không tồn tại",
   user_current_password: "Mật khẩu hiện tại không chính xác",
+  conversation_is_not_found: "Cuộc trò chuyện không tồn tại",
 };

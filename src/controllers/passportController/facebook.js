@@ -1,12 +1,14 @@
 const passport = require("passport");
 const passportFacebook = require("passport-facebook");
 const UserModel = require("../../models/usersModel");
+
 require("dotenv").config();
 const {
   transErrors,
   transValidation,
   transSuccess,
 } = require("../../../lang/vi");
+const chat_groupModel = require("../../models/chat_groupModel");
 const facebookStrategy = passportFacebook.Strategy;
 
 //Valid user user account type: local
@@ -69,15 +71,18 @@ const initPassportFacebook = () => {
 
   //call password.session();
   //return userInfo to req.user
-  passport.deserializeUser((id, done) => {
-    UserModel.findByUserId(id)
-      .then((user) => {
-        return done(null, user);
-      })
-      .catch((err) => {
-        return done(err, null);
-      });
+  passport.deserializeUser(async (id, done) => {
+    try {
+      let user = await UserModel.findByUserIdToSession(id);
+      let getChatGroupsId = await chat_groupModel.getChatGroupIdByUser(
+        user._id
+      );
+      user = user.toObject();
+      user.chatGroupId = getChatGroupsId;
+      return done(null, user);
+    } catch (error) {
+      return done(err, null);
+    }
   });
 };
-
 module.exports = initPassportFacebook;

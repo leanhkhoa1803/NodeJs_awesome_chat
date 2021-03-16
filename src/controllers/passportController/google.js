@@ -1,6 +1,8 @@
 const passport = require("passport");
 const passportGoogle = require("passport-google-oauth");
 const UserModel = require("../../models/usersModel");
+const chat_groupModel = require("../../models/chat_groupModel");
+
 require("dotenv").config();
 const {
   transErrors,
@@ -68,14 +70,18 @@ const initPassportGoogle = () => {
 
   //call password.session();
   //return userInfo to req.user
-  passport.deserializeUser((id, done) => {
-    UserModel.findByUserId(id)
-      .then((user) => {
-        return done(null, user);
-      })
-      .catch((err) => {
-        return done(err, null);
-      });
+  passport.deserializeUser(async (id, done) => {
+    try {
+      let user = await UserModel.findByUserIdToSession(id);
+      let getChatGroupsId = await chat_groupModel.getChatGroupIdByUser(
+        user._id
+      );
+      user = user.toObject();
+      user.chatGroupId = getChatGroupsId;
+      return done(null, user);
+    } catch (error) {
+      return done(err, null);
+    }
   });
 };
 

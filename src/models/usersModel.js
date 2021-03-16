@@ -37,8 +37,8 @@ UserSchema.statics = {
   findByEmail(email) {
     return this.findOne({ "local.email": email }).exec();
   },
-  findByUserId(id) {
-    return this.findOne({ _id: id }).exec();
+  findByUserIdToSession(id) {
+    return this.findOne({ _id: id }, { "local.password": 0 }).exec();
   },
   removeById(id) {
     return this.findByIdAndRemove(id).exec();

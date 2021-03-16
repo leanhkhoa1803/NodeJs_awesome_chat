@@ -1,7 +1,11 @@
 const notifyCationService = require("../services/notifyServices");
 const contactService = require("../services/contactService");
 const messageService = require("../services/messageService");
-
+const {
+  bufferToBase64,
+  getLastItemOfArray,
+  covertTimeStamp,
+} = require("../helpers/clientHelper");
 const getHome = async (req, res) => {
   //only 10 items on time
   let arrNotifications = await notifyCationService.getNotifyCations(
@@ -35,10 +39,8 @@ const getHome = async (req, res) => {
     req.user._id
   );
 
-  let userConversations = getAllConversationItems.userConversations;
-  let groupConversations = getAllConversationItems.groupConversations;
-  let AllConversation = getAllConversationItems.AllConversation;
-
+  let allConversationGetMessages =
+    getAllConversationItems.allConversationGetMessages;
   return res.render("main/home/home", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -52,9 +54,10 @@ const getHome = async (req, res) => {
     countAllContactsSent: countAllContactsSent,
     countAllContactsReceived: countAllContactsReceived,
     getAllConversationItems: getAllConversationItems,
-    userConversations: userConversations,
-    groupConversations: groupConversations,
-    AllConversation: AllConversation,
+    allConversationGetMessages: allConversationGetMessages,
+    bufferToBase64: bufferToBase64,
+    getLastItemOfArray: getLastItemOfArray,
+    covertTimeStamp: covertTimeStamp,
   });
 };
 

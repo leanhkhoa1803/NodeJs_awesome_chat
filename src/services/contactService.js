@@ -3,7 +3,7 @@ const contactModel = require("../models/contactModel");
 const notifyCationModel = require("../models/notificationsModel");
 const lodash = require("lodash");
 
-const LIMIT_NOTIFICATIONS = 2;
+const LIMIT_NOTIFICATIONS = 1;
 const findUsersContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
     let deprecatedUserId = [currentUserId];
@@ -279,7 +279,6 @@ const readMoreContactsReceived = (currentUserId, skipNumberContact) => {
       let users = newContacts.map(async (contact) => {
         return await UserModel.getDataByUserId(contact.userId);
       });
-
       resolve(await Promise.all(users));
     } catch (error) {
       reject(error);

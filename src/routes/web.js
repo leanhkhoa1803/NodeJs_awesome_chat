@@ -4,13 +4,16 @@ const homeController = require("./../controllers/homeController");
 const userController = require("./../controllers/userController");
 const contactController = require("./../controllers/contactController");
 const notifycationController = require("./../controllers/notifycationController");
+const messageController = require("./../controllers/messageController");
 const authValidation = require("./../validation/authValidation");
 const userValidation = require("./../validation/userValidation");
 const contactValidation = require("./../validation/contactValidation");
+const messageValidation = require("./../validation/messageValidation");
 const passport = require("passport");
 const initPassportLocal = require("../controllers/passportController/local");
 const initPassportFacebook = require("../controllers/passportController/facebook");
 const initPassportGoogle = require("../controllers/passportController/google");
+const { transValidation } = require("../../lang/vi");
 
 //init all passport
 initPassportLocal();
@@ -150,7 +153,12 @@ const initRoutes = (app) => {
     authController.checkLogin,
     notifycationController.markNotifyAsRead
   );
-
+  router.post(
+    "/message/add-new-text-emoji",
+    authController.checkLogin,
+    messageValidation.checkMessageLength,
+    messageController.addNewTextEmoji
+  );
   return app.use("/", router);
 };
 module.exports = initRoutes;

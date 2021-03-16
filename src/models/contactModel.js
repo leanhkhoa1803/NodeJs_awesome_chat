@@ -73,7 +73,8 @@ ContactSchema.statics = {
       {
         $and: [{ userId: contactId }, { contactId: userId }, { status: false }],
       },
-      { status: true }
+      { status: true },
+      { updatedAt: Date.now() }
     ).exec();
   },
 
@@ -85,7 +86,7 @@ ContactSchema.statics = {
         { status: true },
       ],
     })
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .limit(limit)
       .exec();
   },
@@ -137,7 +138,7 @@ ContactSchema.statics = {
         { status: true },
       ],
     })
-      .sort({ createdAt: -1 })
+      .sort({ updatedAt: -1 })
       .limit(limit)
       .skip(skip)
       .exec();
@@ -157,6 +158,18 @@ ContactSchema.statics = {
       .skip(skip)
       .limit(limit)
       .exec();
+  },
+
+  updateWhenNewMessage(userId, contactId) {
+    return this.findOneAndUpdate(
+      {
+        $or: [
+          { $and: [{ userId: userId }, { contactId: contactId }] },
+          { $and: [{ userId: contactId }, { contactId: userId }] },
+        ],
+      },
+      { updatedAt: Date.now() }
+    ).exec();
   },
 };
 module.exports = mongoose.model("contact", ContactSchema);
