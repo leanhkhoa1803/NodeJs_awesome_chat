@@ -14,10 +14,12 @@ const initSockets = require("./src/sockets/index");
 const cookieParser = require("cookie-parser");
 const { configSocketIo } = require("./src/config/socketio");
 const { isBuffer } = require("lodash");
-
+const events = require("events");
+const { config } = require("./src/config/config");
 //Init app
 const app = express();
-
+//set max evenlistener
+events.EventEmitter.defaultMaxListeners = config.max_event_listener;
 //init server with socket.io and express
 const server = http.createServer(app);
 let io = socketio(server);

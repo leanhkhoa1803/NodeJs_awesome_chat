@@ -6,6 +6,44 @@ const {
   getLastItemOfArray,
   covertTimeStamp,
 } = require("../helpers/clientHelper");
+const request = require("request");
+
+let getICETurnServer = () => {
+  return new Promise(async (resolve, reject) => {
+    // // Node Get ICE STUN and TURN list
+    // let o = {
+    //   format: "urls",
+    // };
+
+    // let bodyString = JSON.stringify(o);
+    // let options = {
+    //   url: "https://global.xirsys.net/_turn/awesome-chat",
+    //   // host: "global.xirsys.net",
+    //   // path: "/_turn/awesome-chat",
+    //   method: "PUT",
+    //   headers: {
+    //     Authorization:
+    //       "Basic " +
+    //       Buffer.from("anhkhoa:aae1c76e-88b3-11eb-b317-0242ac150002").toString(
+    //         "base64"
+    //       ),
+    //     "Content-Type": "application/json",
+    //     "Content-Length": bodyString.length,
+    //   },
+    // };
+
+    // //call request to get ICE list of turn server
+    // request(options, (error, response, body) => {
+    //   if (error) {
+    //     return reject(error);
+    //   }
+    //   let bodyJSON = JSON.parse(body);
+    //   resolve(bodyJSON.v.iceServers);
+    // });
+    resolve([]);
+  });
+};
+
 const getHome = async (req, res) => {
   //only 10 items on time
   let arrNotifications = await notifyCationService.getNotifyCations(
@@ -41,6 +79,9 @@ const getHome = async (req, res) => {
 
   let allConversationGetMessages =
     getAllConversationItems.allConversationGetMessages;
+
+  let iceServerList = await getICETurnServer();
+
   return res.render("main/home/home", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -58,6 +99,7 @@ const getHome = async (req, res) => {
     bufferToBase64: bufferToBase64,
     getLastItemOfArray: getLastItemOfArray,
     covertTimeStamp: covertTimeStamp,
+    iceServerList: JSON.stringify(iceServerList),
   });
 };
 

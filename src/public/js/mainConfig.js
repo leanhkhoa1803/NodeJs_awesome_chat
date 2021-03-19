@@ -202,6 +202,8 @@ function changScreenChat() {
       imageChat(divId);
       //bat dom cho nt file
       attachmentChat(divId);
+      //bat lang ngheo call video
+      videoChat(divId);
     });
 }
 function bufferToBase64(buffer) {
@@ -244,4 +246,8 @@ $(document).ready(function () {
   changScreenChat();
 
   $("ul.people").find("a")[0].click();
+
+  $("#video-chat-group").bind("click", function () {
+    alertify.notify("No suppport", "error", 5);
+  });
 });
