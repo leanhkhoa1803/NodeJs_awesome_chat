@@ -3,7 +3,7 @@
         <% allConversationGetMessages.forEach(function(conversation,index){ %>
             <% if(conversation.members){ %>
                 <div class="right tab-pane 
-                <% if(index == 0){ %> active <% } %>" data-chat="<%= conversation._id %>"
+                <% if(index === 0){ %> active <% } %>" data-chat="<%= conversation._id %>"
                     id="to_<%= conversation._id %>">
                     <div class="top">
                         <span>To: <span class="name">
@@ -49,7 +49,7 @@
                         </span>
                     </div>
                     <div class="content-chat">
-                        <div class="chat" data-chat="<%= conversation._id %>">
+                        <div class="chat chat-in-group" data-chat="<%= conversation._id %>">
                             <% conversation.messages.forEach(function(message){ %>
                                 <% if(message.messageType==="text" ){ %>
                                     <div class="bubble <% if(message.senderId == user._id){ %> 
@@ -116,7 +116,7 @@
                         id="to_<%= conversation._id %>">
                         <div class="top">
                             <span>To: <span class="name">
-                                    <%= conversation.name %>
+                                    <%= conversation.username %>
                                 </span></span>
                             <span class="chat-menu-right">
                                 <a href="#attachmentsModal_<%= conversation._id %>" class="show-attachments"

@@ -136,6 +136,29 @@ const readMoreContactsReceived = async (req, res) => {
     return res.status(200).send({ error });
   }
 };
+
+const searchFriends = async (req, res) => {
+  let errorArray = [];
+  const validationErrors = validationResult(req);
+
+  if (!validationErrors.isEmpty()) {
+    const errors = Object.values(validationErrors.mapped());
+    errors.forEach((item) => {
+      errorArray.push(item.msg);
+    });
+    return res.status(500).send(errorArray);
+  }
+  try {
+    let currentUserId = req.user._id;
+    let keyword = req.params.keyword;
+
+    const users = await contactService.searchFriends(currentUserId, keyword);
+
+    return res.render("main/groupChat/sections/_searchFriends", { users });
+  } catch (error) {
+    return res.status(500).send(error);
+  }
+};
 module.exports = {
   findUsersContact: findUsersContact,
   addNew: addNew,
@@ -146,4 +169,5 @@ module.exports = {
   readMoreContactsSent: readMoreContactsSent,
   readMoreContactsReceived: readMoreContactsReceived,
   acceptRequestContactReceived: acceptRequestContactReceived,
+  searchFriends: searchFriends,
 };

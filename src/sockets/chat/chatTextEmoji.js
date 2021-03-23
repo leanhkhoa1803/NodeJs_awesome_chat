@@ -13,6 +13,14 @@ let chatTextEmoji = (io) => {
     socket.request.user.chatGroupId.forEach((group) => {
       clients = pushSocketToArr(clients, group._id, socket.id);
     });
+    //push socketid groupchat
+    socket.on("new-group-created", (data) => {
+      clients = pushSocketToArr(clients, data.groupChat._id, socket.id);
+    });
+    socket.on("member-received-group-chat", (data) => {
+      clients = pushSocketToArr(clients, data.groupChatId, socket.id);
+    });
+
     socket.on("chat-text-emoji", (data) => {
       if (data.groupId) {
         let response = {
