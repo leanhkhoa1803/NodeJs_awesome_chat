@@ -143,10 +143,10 @@ $(document).ready(function () {
     </a>`;
 
     if (response.currentGroupId) {
+      divId = response.currentGroupId;
+      messageOfYou.html(attachmentChat);
       if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
-        messageOfYou.html(attachmentChat);
         increaseNumberMessageGroup(divId);
-        divId = response.currentGroupId;
       }
     } else {
       messageOfYou.html(attachmentChat);

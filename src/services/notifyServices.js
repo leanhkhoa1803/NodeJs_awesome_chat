@@ -1,7 +1,7 @@
 const notifyCationModel = require("../models/notificationsModel");
 const UserModel = require("../models/usersModel");
 
-const LIMIT_NOTIFICATIONS = 1;
+const LIMIT_NOTIFICATIONS = 5;
 const getNotifyCations = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {

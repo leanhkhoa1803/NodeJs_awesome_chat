@@ -3,7 +3,7 @@ const contactModel = require("../models/contactModel");
 const notifyCationModel = require("../models/notificationsModel");
 const lodash = require("lodash");
 
-const LIMIT_NOTIFICATIONS = 1;
+const LIMIT_NOTIFICATIONS = 5;
 const findUsersContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
     let deprecatedUserId = [currentUserId];
@@ -285,6 +285,25 @@ const readMoreContactsReceived = (currentUserId, skipNumberContact) => {
     }
   });
 };
+
+const searchFriends = (currentUserId, keyword) => {
+  return new Promise(async (resolve, reject) => {
+    let friendIds = [];
+    let friend = await contactModel.getFriends(currentUserId);
+    friend.forEach((item) => {
+      friendIds.push(item.userId);
+      friendIds.push(item.contactId);
+    });
+
+    friendIds = lodash.uniqBy(friendIds);
+    friendIds = friendIds.filter((friendId) => {
+      return friendId != currentUserId;
+    });
+    let users = await UserModel.findAllAddGroupChat(friendIds, keyword);
+
+    resolve(users);
+  });
+};
 module.exports = {
   findUsersContact: findUsersContact,
   addNew: addNew,
@@ -301,4 +320,5 @@ module.exports = {
   readMoreContacts: readMoreContacts,
   readMoreContactsSent: readMoreContactsSent,
   readMoreContactsReceived: readMoreContactsReceived,
+  searchFriends: searchFriends,
 };

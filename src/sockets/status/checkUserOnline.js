@@ -13,16 +13,24 @@ let checkUserOnline = (io) => {
     socket.request.user.chatGroupId.forEach((group) => {
       clients = pushSocketToArr(clients, group._id, socket.id);
     });
+    //push socketid groupchat
+    socket.on("new-group-created", (data) => {
+      clients = pushSocketToArr(clients, data.groupChat._id, socket.id);
+    });
+    socket.on("member-received-group-chat", (data) => {
+      clients = pushSocketToArr(clients, data.groupChatId, socket.id);
+    });
 
-    //Step1 : emit to user login or f5
-    let listUserOnline = Object.keys(clients);
-    socket.emit("server-send-list-user-online", listUserOnline);
-
-    //Step2 : emit to all another user when user online
-    socket.broadcast.emit(
-      "server-send-when-new-user-online",
-      socket.request.user._id
-    );
+    socket.on("check-status", () => {
+      //Step1 : emit to user login or f5
+      let listUserOnline = Object.keys(clients);
+      socket.emit("server-send-list-user-online", listUserOnline);
+      //Step2 : emit to all another user when user online
+      socket.broadcast.emit(
+        "server-send-when-new-user-online",
+        socket.request.user._id
+      );
+    });
 
     //kiem tra neu khong truy cap nua thi t xoa bot socket
     socket.on("disconnect", function () {

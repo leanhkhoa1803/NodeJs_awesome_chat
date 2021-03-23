@@ -14,6 +14,8 @@ exports.transValidation = {
   find_user_keyword:
     "Lỗi từ khóa tìm kiếm, Vui lòng không nhập từ khóa đặc biệt",
   message_Text_Emoji_Incorrect: "Tin nhắn tối đa 400 kí tự",
+  add_new_group_user_incorrect: "Nhóm tối thiểu 3 thành viên",
+  add_new_group_name_incorrect: "Vui lòng nhập tên nhóm trò chuyện",
 };
 
 exports.transSuccess = {

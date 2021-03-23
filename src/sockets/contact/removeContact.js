@@ -7,7 +7,7 @@ const {
 let removeContact = (io) => {
   let clients = {};
   io.on("connection", (socket) => {
-    let currentId = socket.request.user.id;
+    let currentId = socket.request.user._id;
     //kiem tra neu moi dang nhap thi tao mang luu key:currentUserId value : socket.request.user.id
     clients = pushSocketToArr(clients, currentId, socket.id);
 
@@ -30,7 +30,7 @@ let removeContact = (io) => {
 
     //kiem tra neu khong truy cap nua thi t xoa bot socket
     socket.on("disconnect", function () {
-      clients = removeSocketIdFromArr(clients, socket.request.user.id, socket);
+      clients = removeSocketIdFromArr(clients, socket.request.user._id, socket);
     });
   });
 };

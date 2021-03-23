@@ -16,6 +16,9 @@ const ChatGroupSchema = new Schema({
 });
 
 ChatGroupSchema.statics = {
+  createNew(item) {
+    return this.create(item);
+  },
   getChatGroups(userId, limit) {
     return this.find({
       members: { $elemMatch: { userId: userId } },
@@ -29,11 +32,11 @@ ChatGroupSchema.statics = {
     return this.findById(id).exec();
   },
 
-  updateWhenNewMessage(id, newMessageAmount) {
-    return this.findOneAndUpdate({ id }, [
-      { messageAmount: newMessageAmount },
-      { updatedAt: Date.now() },
-    ]).exec();
+  updateWhenNewMessageDelivered(id, newMessageAmount) {
+    return this.findByIdAndUpdate(id, {
+      messageAmount: newMessageAmount,
+      updatedAt: Date.now(),
+    }).exec();
   },
 
   getChatGroupIdByUser(userId) {
@@ -43,6 +46,16 @@ ChatGroupSchema.statics = {
       },
       { _id: 1 }
     ).exec();
+  },
+
+  readMoreChatGroups(userId, skip, limit) {
+    return this.find({
+      members: { $elemMatch: { userId: userId } },
+    })
+      .sort({ updatedAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .exec();
   },
 };
 

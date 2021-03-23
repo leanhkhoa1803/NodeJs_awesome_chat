@@ -10,6 +10,10 @@ function nineScrollLeft() {
   });
 }
 
+function resizeNineScrollLeft() {
+  $(".left").getNiceScroll().resize();
+}
+
 function nineScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}]`).niceScroll({
     smoothscroll: true,
@@ -99,7 +103,6 @@ function gridPhotos(layoutNumber) {
       let modalImagesId = href.replace("#", "");
 
       let dataModalImage = $(`#${modalImagesId}`).find("div.modal-body").html();
-
       let countRows = Math.ceil(
         $(`#${modalImagesId}`).find("div.all-images>img").length / layoutNumber
       );
@@ -129,40 +132,6 @@ function gridPhotos(layoutNumber) {
         $(this).find("div.modal-body").html(dataModalImage);
       });
     });
-}
-
-function addFriendsToGroup() {
-  $("ul#group-chat-friends")
-    .find("div.add-user")
-    .bind("click", function () {
-      let uid = $(this).data("uid");
-      $(this).remove();
-      let html = $("ul#group-chat-friends")
-        .find("div[data-uid=" + uid + "]")
-        .html();
-
-      let promise = new Promise(function (resolve, reject) {
-        $("ul#friends-added").append(html);
-        $("#groupChatModal .list-user-added").show();
-        resolve(true);
-      });
-      promise.then(function (success) {
-        $("ul#group-chat-friends")
-          .find("div[data-uid=" + uid + "]")
-          .remove();
-      });
-    });
-}
-
-function cancelCreateGroup() {
-  $("#cancel-group-chat").bind("click", function () {
-    $("#groupChatModal .list-user-added").hide();
-    if ($("ul#friends-added>li").length) {
-      $("ul#friends-added>li").each(function (index) {
-        $(this).remove();
-      });
-    }
-  });
 }
 
 function flashMasterNotify() {
@@ -231,12 +200,6 @@ $(document).ready(function () {
   // Tham số chỉ được phép trong khoảng từ 1 đến 5
   gridPhotos(5);
 
-  // Thêm người dùng vào danh sách liệt kê trước khi tạo nhóm trò chuyện
-  addFriendsToGroup();
-
-  // Action hủy việc tạo nhóm trò chuyện
-  cancelCreateGroup();
-
   //FlashMessage ở màn hình master
   flashMasterNotify();
 
@@ -245,7 +208,10 @@ $(document).ready(function () {
   //thay doi man hinh chat
   changScreenChat();
 
-  $("ul.people").find("a")[0].click();
+  // click vao phan tu dau tien cua cuoc tro chuyen
+  if ($("ul.people").find("a").length) {
+    $("ul.people").find("a")[0].click();
+  }
 
   $("#video-chat-group").bind("click", function () {
     alertify.notify("No suppport", "error", 5);

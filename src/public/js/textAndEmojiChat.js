@@ -31,16 +31,17 @@ function textAndEmojiChat(divId) {
               message: data.message,
             };
             //b1 : chinh sua du lieu
-            let messageOfMe = $(`
-            <div class="bubble me" data-mess-id="${data.message._id}"></div>`);
+            let messageOfMe = $(
+              `<div class="bubble me" data-mess-id="${data.message._id}">
+              <img src="/images/users/${data.message.sender.avatar}" class="avatar-small"
+                title="${data.message.sender.username}">
+                ${data.message.text}
+              </div>`
+            );
             if (dataTextEmojiForSend.isChatGroup) {
-              messageOfMe.html(`<img src="/images/users/${data.message.sender.avatar}" class="avatar-small"
-              title="${data.message.sender.username}">`);
-              messageOfMe.text(data.message.text);
               dataToEmit.groupId = targetId;
               increaseNumberMessageGroup(divId);
             } else {
-              messageOfMe.text(data.message.text);
               dataToEmit.contactId = targetId;
             }
             //b2 : append message to screen
@@ -117,10 +118,12 @@ $(document).ready(function () {
     );
 
     if (response.currentGroupId) {
+      divId = response.currentGroupId;
+
+      nineScrollRight(divId);
       if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
         increaseNumberMessageGroup(divId);
       }
-      divId = response.currentGroupId;
     } else {
       divId = response.currentUserId;
     }

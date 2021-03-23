@@ -148,10 +148,11 @@ $(document).ready(function () {
     class="show-image-chat">`;
 
     if (response.currentGroupId) {
+      divId = response.currentGroupId;
+
+      messageOfYou.html(imageChat);
       if (response.currentUserId !== $("#dropdown-navbar-user").data("uid")) {
-        messageOfYou.html(imageChat);
         increaseNumberMessageGroup(divId);
-        divId = response.currentGroupId;
       }
     } else {
       messageOfYou.html(imageChat);

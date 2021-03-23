@@ -1083,10 +1083,10 @@ label:focus,
   left: -3px;
   background-color: #2ecc71;
 }
-.right .bubble.me img.avatar-small{
+.right .bubble.me img.avatar-small {
   margin-left: 15px;
 }
-.right .bubble.you img.avatar-small{
+.right .bubble.you img.avatar-small {
   margin-left: 10px;
 }
 
@@ -1262,12 +1262,12 @@ label:focus,
   border-color: #ccc;
 }
 
-.list-user-added button#create-group-chat {
+.list-user-added button#btn-create-group-chat {
   border-color: #2acc77;
   background-color: #2acc77;
 }
 
-.list-user-added button#cancel-group-chat {
+.list-user-added button#btn-cancel-group-chat {
   border-color: #ff7675;
   background-color: #ff7675;
   margin-left: 5px;
@@ -1379,7 +1379,11 @@ label:focus,
   font-size: 18px !important;
   color: #1a1a1a !important;
 }
-.message-preview-real-time{
-  color :hsl(214deg 89% 52%) !important;
+.message-preview-real-time {
+  color: hsl(214deg 89% 52%) !important;
   font-weight: 600 !important;
+}
+.message-loading {
+  display: block;
+  margin: 0 auto;
 }

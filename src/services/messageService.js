@@ -8,7 +8,7 @@ const { config } = require("../config/config");
 const fsExtra = require("fs-extra");
 
 const LIMIT_CONVERSATION = 5;
-const LIMIT_MESSAGE_TAKEN = 15;
+const LIMIT_MESSAGE_TAKEN = 10;
 const getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -113,7 +113,7 @@ const addNewTextEmoji = (sender, receiverId, messageValue, isChatGroup) => {
         //create new message
         let newMessage = await messageModel.model.createNew(newMessageItem);
         //update group chat message
-        await chatGroupModel.updateWhenNewMessage(
+        await chatGroupModel.updateWhenNewMessageDelivered(
           chatGroupReceiver._id,
           chatGroupReceiver.messageAmount + 1
         );
@@ -192,7 +192,7 @@ const addNewImage = (sender, receiverId, messageValue, isChatGroup) => {
         //create new message
         let newMessage = await messageModel.model.createNew(newMessageItem);
         //update group chat message
-        await chatGroupModel.updateWhenNewMessage(
+        await chatGroupModel.updateWhenNewMessageDelivered(
           chatGroupReceiver._id,
           chatGroupReceiver.messageAmount + 1
         );
@@ -279,7 +279,7 @@ const addNewAttachment = (sender, receiverId, messageValue, isChatGroup) => {
         //create new message
         let newMessage = await messageModel.model.createNew(newMessageItem);
         //update group chat message
-        await chatGroupModel.updateWhenNewMessage(
+        await chatGroupModel.updateWhenNewMessageDelivered(
           chatGroupReceiver._id,
           chatGroupReceiver.messageAmount + 1
         );
@@ -327,9 +327,221 @@ const addNewAttachment = (sender, receiverId, messageValue, isChatGroup) => {
     }
   });
 };
+
+const readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await contactModel.readMoreContacts(
+        currentUserId,
+        skipPersonal,
+        LIMIT_CONVERSATION
+      );
+
+      let userConversationsPromise = contacts.map(async (contact) => {
+        if (contact.contactId == currentUserId) {
+          let getUserContact = await usersModel.getDataByUserId(contact.userId);
+          getUserContact.updatedAt = contact.updatedAt;
+          return getUserContact;
+        } else {
+          let getUserContact = await usersModel.getDataByUserId(
+            contact.contactId
+          );
+          getUserContact.updatedAt = contact.updatedAt;
+          return getUserContact;
+        }
+      });
+
+      let userConversations = await Promise.all(userConversationsPromise);
+
+      let groupConversations = await chatGroupModel.readMoreChatGroups(
+        currentUserId,
+        skipGroup,
+        LIMIT_CONVERSATION
+      );
+
+      let AllConversation = userConversations.concat(groupConversations);
+      AllConversation = lodash.sortBy(AllConversation, (item) => {
+        return -item.updatedAt;
+      });
+
+      //get messages to screen chat
+      let allConversationGetMessagesPromise = AllConversation.map(
+        async (conversation) => {
+          conversation = conversation.toObject();
+          if (conversation.members) {
+            let getMessages = await messageModel.model.getMessagesInGroup(
+              conversation._id,
+              LIMIT_MESSAGE_TAKEN
+            );
+            conversation.messages = lodash.reverse(getMessages);
+          } else {
+            let getMessages = await messageModel.model.getMessagesInPersonal(
+              currentUserId,
+              conversation._id,
+              LIMIT_MESSAGE_TAKEN
+            );
+            conversation.messages = lodash.reverse(getMessages);
+          }
+
+          return conversation;
+        }
+      );
+
+      let allConversationGetMessages = await Promise.all(
+        allConversationGetMessagesPromise
+      );
+      //sort data
+      allConversationGetMessages = lodash.sortBy(
+        allConversationGetMessages,
+        (item) => {
+          return -item.updatedAt;
+        }
+      );
+      resolve(allConversationGetMessages);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const readMoreUserChat = (currentUserId, skipPersonal) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await contactModel.readMoreContacts(
+        currentUserId,
+        skipPersonal,
+        LIMIT_CONVERSATION
+      );
+
+      let userConversationsPromise = contacts.map(async (contact) => {
+        if (contact.contactId == currentUserId) {
+          let getUserContact = await usersModel.getDataByUserId(contact.userId);
+          getUserContact.updatedAt = contact.updatedAt;
+          return getUserContact;
+        } else {
+          let getUserContact = await usersModel.getDataByUserId(
+            contact.contactId
+          );
+          getUserContact.updatedAt = contact.updatedAt;
+          return getUserContact;
+        }
+      });
+
+      let userConversations = await Promise.all(userConversationsPromise);
+
+      userConversations = lodash.sortBy(userConversations, (item) => {
+        return -item.updatedAt;
+      });
+
+      //get messages to screen chat
+      let allConversationGetMessagesPromise = userConversations.map(
+        async (conversation) => {
+          conversation = conversation.toObject();
+          let getMessages = await messageModel.model.getMessagesInPersonal(
+            currentUserId,
+            conversation._id,
+            LIMIT_MESSAGE_TAKEN
+          );
+          conversation.messages = lodash.reverse(getMessages);
+
+          return conversation;
+        }
+      );
+
+      let allConversationGetMessages = await Promise.all(
+        allConversationGetMessagesPromise
+      );
+      //sort data
+      allConversationGetMessages = lodash.sortBy(
+        allConversationGetMessages,
+        (item) => {
+          return -item.updatedAt;
+        }
+      );
+      resolve(allConversationGetMessages);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const readMoreGroupChat = (currentUserId, skipGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let groupConversations = await chatGroupModel.readMoreChatGroups(
+        currentUserId,
+        skipGroup,
+        LIMIT_CONVERSATION
+      );
+
+      AllConversation = lodash.sortBy(groupConversations, (item) => {
+        return -item.updatedAt;
+      });
+
+      //get messages to screen chat
+      let allConversationGetMessagesPromise = AllConversation.map(
+        async (conversation) => {
+          conversation = conversation.toObject();
+
+          let getMessages = await messageModel.model.getMessagesInGroup(
+            conversation._id,
+            LIMIT_MESSAGE_TAKEN
+          );
+          conversation.messages = lodash.reverse(getMessages);
+
+          return conversation;
+        }
+      );
+
+      let allConversationGetMessages = await Promise.all(
+        allConversationGetMessagesPromise
+      );
+      //sort data
+      allConversationGetMessages = lodash.sortBy(
+        allConversationGetMessages,
+        (item) => {
+          return -item.updatedAt;
+        }
+      );
+      resolve(allConversationGetMessages);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+const readMore = (currentUserId, skipMessage, targetId, chatInGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (chatInGroup) {
+        let getMessages = await messageModel.model.readMoreMessageInGroup(
+          targetId,
+          skipMessage,
+          LIMIT_MESSAGE_TAKEN
+        );
+        getMessages = lodash.reverse(getMessages);
+        return resolve(getMessages);
+      }
+      let getMessages = await messageModel.model.readMoreMessageInPersonal(
+        currentUserId,
+        targetId,
+        skipMessage,
+        LIMIT_MESSAGE_TAKEN
+      );
+      getMessages = lodash.reverse(getMessages);
+      return resolve(getMessages);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
 module.exports = {
   getAllConversationItems: getAllConversationItems,
   addNewTextEmoji: addNewTextEmoji,
   addNewImage: addNewImage,
   addNewAttachment: addNewAttachment,
+  readMoreAllChat: readMoreAllChat,
+  readMoreUserChat: readMoreUserChat,
+  readMoreGroupChat: readMoreGroupChat,
+  readMore: readMore,
 };

@@ -5,10 +5,12 @@ const userController = require("./../controllers/userController");
 const contactController = require("./../controllers/contactController");
 const notifycationController = require("./../controllers/notifycationController");
 const messageController = require("./../controllers/messageController");
+const groupChatController = require("./../controllers/groupChatController");
 const authValidation = require("./../validation/authValidation");
 const userValidation = require("./../validation/userValidation");
 const contactValidation = require("./../validation/contactValidation");
 const messageValidation = require("./../validation/messageValidation");
+const groupChatValidation = require("./../validation/groupChatValidation");
 const passport = require("passport");
 const initPassportLocal = require("../controllers/passportController/local");
 const initPassportFacebook = require("../controllers/passportController/facebook");
@@ -144,6 +146,12 @@ const initRoutes = (app) => {
     contactController.readMoreContactsReceived
   );
   router.get(
+    "/contact/search-friends/:keyword",
+    authController.checkLogin,
+    contactValidation.findUserContact,
+    contactController.searchFriends
+  );
+  router.get(
     "/notifycation/read-more",
     authController.checkLogin,
     notifycationController.readMore
@@ -168,6 +176,33 @@ const initRoutes = (app) => {
     "/message/add-new-attachment",
     authController.checkLogin,
     messageController.addNewAttachment
+  );
+  router.get(
+    "/message/read-more-all-chat",
+    authController.checkLogin,
+    messageController.readMoreAllChat
+  );
+  router.get(
+    "/message/read-more-user-chat",
+    authController.checkLogin,
+    messageController.readMoreUserChat
+  );
+  router.get(
+    "/message/read-more-group-chat",
+    authController.checkLogin,
+    messageController.readMoreGroupChat
+  );
+  router.get(
+    "/message/read-more",
+    authController.checkLogin,
+    messageController.readMore
+  );
+
+  router.post(
+    "/group-chat/add-new",
+    authController.checkLogin,
+    groupChatValidation.addNewGroupChat,
+    groupChatController.addNewGroup
   );
   return app.use("/", router);
 };

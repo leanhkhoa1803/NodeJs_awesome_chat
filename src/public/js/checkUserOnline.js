@@ -1,3 +1,6 @@
+//step 0 :check status
+socket.emit("check-status");
+
 //step1
 socket.on("server-send-list-user-online", function (listUserId) {
   listUserId.forEach((userId) => {
