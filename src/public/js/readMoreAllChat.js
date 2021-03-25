@@ -38,8 +38,17 @@ $(document).ready(function () {
         //Step8 :check online
         socket.emit("check-status");
 
+        //Step8 : remove loading
         $("#link-read-more-all-chat").css("display", "inline-block");
         $(".lds-hourglass").css("display", "none");
+
+        //Step11 : call readMoreMessages()
+        readMoreMessages();
+
+        zoomImageChat();
+        $("body").append(data.membersModalData);
+
+        userTalk();
       }
     );
   });

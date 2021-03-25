@@ -199,12 +199,17 @@ const readMoreAllChat = async (req, res) => {
       "src/views/main/readMoreConversations/_attachmentModal.ejs",
       dataRender
     );
+    let membersModalData = await renderFile(
+      "src/views/main/readMoreConversationsOfGroupChat/_membersModal.ejs",
+      dataRender
+    );
 
     return res.status(200).send({
       leftSideData: leftSideData,
       rightSideData: rightSideData,
       imageModal: imageModal,
       attactmentModal: attactmentModal,
+      membersModalData: membersModalData,
     });
   } catch (error) {
     return res.status(200).send({ error });
@@ -285,12 +290,17 @@ const readMoreGroupChat = async (req, res) => {
       "src/views/main/readMoreConversations/_attachmentModal.ejs",
       dataRender
     );
+    let membersModalData = await renderFile(
+      "src/views/main/readMoreConversationsOfGroupChat/_membersModal.ejs",
+      dataRender
+    );
 
     return res.status(200).send({
       leftSideData: leftSideData,
       rightSideData: rightSideData,
       imageModal: imageModal,
       attactmentModal: attactmentModal,
+      membersModalData: membersModalData,
     });
   } catch (error) {
     return res.status(200).send({ error });

@@ -107,7 +107,7 @@ function callCreateGroupChat() {
               <a href="#uid_${data.groupChat._id}" class="room-chat" data-target="#to_${data.groupChat._id}">
                 <li class="person group-chat" data-chat="${data.groupChat._id}">
                     <div class="left-avatar">
-                        <img src="images/users/group-avatar-trungquandev.png" alt="">
+                        <img src="images/users/group-avatar.png" alt="">
                     </div>
                     <span class="name">
                         <span class="group-chat-name">
@@ -148,10 +148,11 @@ function callCreateGroupChat() {
                         <a href="javascript:void(0)">&nbsp;</a>
                     </span>
                     <span class="chat-menu-right">
-                        <a href="javascript:void(0)" id="number-numbers" data-toggle="modal">
+                        <a href="#membersModal_${data.groupChat._id}" id="number-numbers" data-toggle="modal">
                             <span class="show-number-members">
                             ${data.groupChat.userAmount}
                             </span>
+                            Thành viên
                             <i class="fa fa-users"></i>
                         </a>
                     </span>
@@ -237,6 +238,9 @@ function callCreateGroupChat() {
           socket.emit("new-group-created", { groupChat: data.groupChat });
 
           socket.emit("check-status");
+          $("body").append(data.membersModalData);
+
+          userTalk();
         }
       ).fail(function (response) {
         alertify.notify(response.responseText, "error", 5);
@@ -263,7 +267,7 @@ $(document).ready(function () {
       <a href="#uid_${response.groupChat._id}" class="room-chat" data-target="#to_${response.groupChat._id}">
         <li class="person group-chat" data-chat="${response.groupChat._id}">
             <div class="left-avatar">
-                <img src="images/users/group-avatar-trungquandev.png" alt="">
+                <img src="images/users/group-avatar.png" alt="">
             </div>
             <span class="name">
                 <span class="group-chat-name">
@@ -304,10 +308,11 @@ $(document).ready(function () {
                         <a href="javascript:void(0)">&nbsp;</a>
                     </span>
                     <span class="chat-menu-right">
-                        <a href="javascript:void(0)" id="number-numbers" data-toggle="modal">
+                        <a href="#membersModal_${response.groupChat._id}" id="number-numbers" data-toggle="modal">
                             <span class="show-number-members">
                             ${response.groupChat.userAmount}
                             </span>
+                            Thành viên
                             <i class="fa fa-users"></i>
                         </a>
                     </span>
@@ -401,5 +406,8 @@ $(document).ready(function () {
 
     //Step10 : check status to update online
     socket.emit("check-status");
+    $("body").append(response.membersModalData);
+
+    userTalk();
   });
 });

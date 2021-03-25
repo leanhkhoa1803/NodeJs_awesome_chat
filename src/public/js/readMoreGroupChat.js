@@ -37,6 +37,12 @@ $(document).ready(function () {
 
         $("#link-read-more-group-chat").css("display", "inline-block");
         $(".lds-hourglass").css("display", "none");
+        readMoreMessages();
+
+        zoomImageChat();
+        $("body").append(data.membersModalData);
+
+        userTalk();
       }
     );
   });

@@ -123,6 +123,8 @@ function imageChat(divId) {
           $(`#imagesModal_${divId}`)
             .find("div.all-images")
             .append(imageChatToAddModal);
+
+          zoomImageChat();
         },
         error: function (error) {
           alertify.notify(error.responseText, "error", 5);
@@ -209,5 +211,6 @@ $(document).ready(function () {
         .find("div.all-images")
         .append(imageChatToAddModal);
     }
+    zoomImageChat();
   });
 });

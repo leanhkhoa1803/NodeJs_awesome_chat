@@ -25,6 +25,12 @@
     <%- include('alert/alert'); %>
         <%- include('navbar/navbar'); %>
             <%- content %>
+
+                <div id="img-chat-modal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="img-chat-modal-content">
+                    <div id="caption"></div>
+                </div>
                 <!--Libraries-->
                 <script src="bower_components/jquery/dist/jquery.min.js"></script>
                 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -77,6 +83,7 @@
                 <script src="js/readMoreUserChat.js"></script>
                 <script src="js/readMoreGroupChat.js"></script>
                 <script src="js/readMoreMessage.js"></script>
+                <script src="js/searchConversation.js"></script>
                 <%- include('contact/contactModal'); %>
                     <%- include('streaming/streamingModal'); %>
                         <%- include('image/imagesModal'); %>
@@ -84,6 +91,9 @@
                                 <%- include('user/userModal'); %>
                                     <%- include('groupChat/groupChatModal'); %>
                                         <%- include('notifycation/notifycationModal'); %>
+
+                                            <!-- extras -->
+                                            <%- include('extras/membersModal'); %>
 
 </body>
 

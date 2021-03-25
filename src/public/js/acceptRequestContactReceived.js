@@ -182,6 +182,8 @@ function acceptRequestContactReceived() {
           `;
             $("body").append(attachmentModalData);
             socket.emit("check-status");
+
+            userTalk();
           }
         },
       });
@@ -356,6 +358,8 @@ socket.on("response-accept-request-contact-received", function (user) {
           `;
   $("body").append(attachmentModalData);
   socket.emit("check-status");
+
+  userTalk();
 });
 
 $(document).ready(function () {
