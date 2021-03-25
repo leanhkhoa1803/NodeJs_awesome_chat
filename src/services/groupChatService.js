@@ -1,5 +1,6 @@
 const lodash = require("lodash");
 const chatGroupModel = require("../models/chat_groupModel");
+const usersModel = require("../models/usersModel");
 
 const addNewGroup = (currentUserId, arrayMembers, groupChatName) => {
   return new Promise(async (resolve, reject) => {
@@ -14,8 +15,15 @@ const addNewGroup = (currentUserId, arrayMembers, groupChatName) => {
         userId: `${currentUserId}`,
         members: arrayMembers,
       };
-      let newGroupChat = await chatGroupModel.createNew(newGroupChatItem);
-      resolve(newGroupChat);
+      let newGroup = await chatGroupModel.createNew(newGroupChatItem);
+
+      newGroup = newGroup.toObject();
+      newGroup.membersInfo = [];
+      for (let member of newGroup.members) {
+        let userInfo = await usersModel.getDataByUserId(member.userId);
+        newGroup.membersInfo.push(userInfo);
+      }
+      resolve(newGroup);
     } catch (error) {
       reject(error);
     }

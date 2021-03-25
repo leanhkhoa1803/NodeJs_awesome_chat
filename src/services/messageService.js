@@ -7,7 +7,7 @@ const { transErrors } = require("../../lang/vi");
 const { config } = require("../config/config");
 const fsExtra = require("fs-extra");
 
-const LIMIT_CONVERSATION = 5;
+const LIMIT_CONVERSATION = 1;
 const LIMIT_MESSAGE_TAKEN = 10;
 const getAllConversationItems = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
@@ -52,6 +52,12 @@ const getAllConversationItems = (currentUserId) => {
               LIMIT_MESSAGE_TAKEN
             );
             conversation.messages = lodash.reverse(getMessages);
+            // extras get userInfo
+            conversation.membersInfo = [];
+            for (let member of conversation.members) {
+              let userInfo = await usersModel.getDataByUserId(member.userId);
+              conversation.membersInfo.push(userInfo);
+            }
           } else {
             let getMessages = await messageModel.model.getMessagesInPersonal(
               currentUserId,
@@ -79,6 +85,7 @@ const getAllConversationItems = (currentUserId) => {
         allConversationGetMessages: allConversationGetMessages,
       });
     } catch (error) {
+      console.error(error);
       reject(error);
     }
   });
@@ -374,6 +381,12 @@ const readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
               LIMIT_MESSAGE_TAKEN
             );
             conversation.messages = lodash.reverse(getMessages);
+            // extras get userInfo
+            conversation.membersInfo = [];
+            for (let member of conversation.members) {
+              let userInfo = await usersModel.getDataByUserId(member.userId);
+              conversation.membersInfo.push(userInfo);
+            }
           } else {
             let getMessages = await messageModel.model.getMessagesInPersonal(
               currentUserId,
@@ -488,6 +501,12 @@ const readMoreGroupChat = (currentUserId, skipGroup) => {
             LIMIT_MESSAGE_TAKEN
           );
           conversation.messages = lodash.reverse(getMessages);
+          // extras get userInfo
+          conversation.membersInfo = [];
+          for (let member of conversation.members) {
+            let userInfo = await usersModel.getDataByUserId(member.userId);
+            conversation.membersInfo.push(userInfo);
+          }
 
           return conversation;
         }

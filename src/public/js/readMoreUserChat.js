@@ -38,6 +38,9 @@ $(document).ready(function () {
 
         $("#link-read-more-user-chat").css("display", "inline-block");
         $(".lds-hourglass").css("display", "none");
+
+        readMoreMessages();
+        zoomImageChat();
       }
     );
   });

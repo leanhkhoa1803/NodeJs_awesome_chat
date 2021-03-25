@@ -6,11 +6,14 @@ const contactController = require("./../controllers/contactController");
 const notifycationController = require("./../controllers/notifycationController");
 const messageController = require("./../controllers/messageController");
 const groupChatController = require("./../controllers/groupChatController");
+const conversationController = require("./../controllers/conversationController");
+
 const authValidation = require("./../validation/authValidation");
 const userValidation = require("./../validation/userValidation");
 const contactValidation = require("./../validation/contactValidation");
 const messageValidation = require("./../validation/messageValidation");
 const groupChatValidation = require("./../validation/groupChatValidation");
+const conversationValidation = require("./../validation/conversationValidation");
 const passport = require("passport");
 const initPassportLocal = require("../controllers/passportController/local");
 const initPassportFacebook = require("../controllers/passportController/facebook");
@@ -204,6 +207,13 @@ const initRoutes = (app) => {
     groupChatValidation.addNewGroupChat,
     groupChatController.addNewGroup
   );
+  router.get(
+    "/conversation/search/:keyword",
+    authController.checkLogin,
+    conversationValidation.searchConversation,
+    conversationController.searchConversation
+  );
+
   return app.use("/", router);
 };
 module.exports = initRoutes;

@@ -1,10 +1,3 @@
-/*
- *
- * login-register modal css
- * https://trungquandev.com
- *
-/*  Shake animation  */
-
 @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600);
 
 /* @charset "UTF-8"; */
@@ -17,7 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  font-family: 'Source Sans Pro', sans-serif;
+  font-family: "Source Sans Pro", sans-serif;
   font-weight: 400;
   background-image: url("../images/background/image.jpg");
   background-size: cover;
@@ -55,7 +48,7 @@ hr {
   color: #fff;
 }
 
-.my-table>tbody>tr>td {
+.my-table > tbody > tr > td {
   border-top: 0px;
   font-size: 15px;
 }
@@ -211,7 +204,7 @@ hr {
 }
 
 .login .division .line {
-  border-top: 1px solid #DFDFDF;
+  border-top: 1px solid #dfdfdf;
   position: absolute;
   top: 10px;
   width: 34%;
@@ -237,8 +230,8 @@ hr {
 }
 
 .login .social .circle {
-  background-color: #EEEEEE;
-  color: #FFFFFF;
+  background-color: #eeeeee;
+  color: #ffffff;
   border-radius: 100px;
   display: inline-block;
   margin: 0 17px;
@@ -250,29 +243,28 @@ hr {
 }
 
 .login .social .facebook {
-  background-color: #455CA8;
-  color: #FFFFFF;
+  background-color: #455ca8;
+  color: #ffffff;
 }
 
 .login .social .google {
-  background-color: #F74933;
+  background-color: #f74933;
 }
 
 .login .social .github {
-  background-color: #403A3A;
+  background-color: #403a3a;
 }
 
 .login .facebook:hover {
-  background-color: #6E83CD;
+  background-color: #6e83cd;
 }
 
 .login .google:hover {
-  background-color: #FF7566;
+  background-color: #ff7566;
 }
 
 .login .github:hover {
-  background-color: #4D4D4d;
-  ;
+  background-color: #4d4d4d;
 }
 
 .login .forgot {
@@ -285,10 +277,10 @@ hr {
 
 .login .btn-login,
 .registerBox .btn-register {
-  background-color: #00BBFF;
-  border-color: #00BBFF;
+  background-color: #00bbff;
+  border-color: #00bbff;
   border-width: 0;
-  color: #FFFFFF;
+  color: #ffffff;
   display: block;
   margin: 0 auto;
   padding: 15px 50px;
@@ -298,25 +290,25 @@ hr {
 
 .login .btn-login:hover,
 .registerBox .btn-register:hover {
-  background-color: #00A4E4;
-  color: #FFFFFF;
+  background-color: #00a4e4;
+  color: #ffffff;
 }
 
 .login .form-control {
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 0.09);
   box-shadow: 0 1px 0px 0px rgba(0, 0, 0, 0.09) inset;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .login .form-control:hover {
-  background-color: rgba(0, 0, 0, .16);
+  background-color: rgba(0, 0, 0, 0.16);
 }
 
 .login .form-control:focus {
   box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.04) inset;
   background-color: rgba(0, 0, 0, 0.23);
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .login .box .form input[type="text"],
@@ -331,7 +323,7 @@ hr {
   width: 100%;
 }
 
-@media (max-width:400px) {
+@media (max-width: 400px) {
   .login .modal-dialog {
     width: 100%;
   }
@@ -340,7 +332,7 @@ hr {
 .big-login,
 .big-register {
   background-color: #00bbff;
-  color: #FFFFFF;
+  color: #ffffff;
   border-radius: 7px;
   border-width: 2px;
   font-size: 14px;
@@ -352,19 +344,19 @@ hr {
 }
 
 .big-login:hover {
-  background-color: #00A4E4;
-  color: #FFFFFF;
+  background-color: #00a4e4;
+  color: #ffffff;
 }
 
 .big-register {
-  background-color: rgba(0, 0, 0, .0);
+  background-color: rgba(0, 0, 0, 0);
   color: #00bbff;
   border-color: #00bbff;
 }
 
 .big-register:hover {
-  border-color: #00A4E4;
-  color: #00A4E4;
+  border-color: #00a4e4;
+  color: #00a4e4;
 }
 
 label {

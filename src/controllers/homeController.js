@@ -81,7 +81,6 @@ const getHome = async (req, res) => {
     getAllConversationItems.allConversationGetMessages;
 
   let iceServerList = await getICETurnServer();
-
   return res.render("main/home/home", {
     errors: req.flash("errors"),
     success: req.flash("success"),
@@ -94,7 +93,6 @@ const getHome = async (req, res) => {
     countAllContacts: countAllContacts,
     countAllContactsSent: countAllContactsSent,
     countAllContactsReceived: countAllContactsReceived,
-    getAllConversationItems: getAllConversationItems,
     allConversationGetMessages: allConversationGetMessages,
     bufferToBase64: bufferToBase64,
     getLastItemOfArray: getLastItemOfArray,

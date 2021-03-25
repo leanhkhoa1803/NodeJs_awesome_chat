@@ -57,6 +57,18 @@ ChatGroupSchema.statics = {
       .limit(limit)
       .exec();
   },
+
+  getChatGroupsByUserIdAndKeyword(userId, keyword, limit) {
+    return this.find({
+      $and: [
+        { members: { $elemMatch: { userId: userId } } },
+        { name: { $regex: new RegExp(keyword, "i") } },
+      ],
+    })
+      .sort({ updatedAt: -1 })
+      .limit(limit)
+      .exec();
+  },
 };
 
 module.exports = mongoose.model("chatgroup", ChatGroupSchema);
